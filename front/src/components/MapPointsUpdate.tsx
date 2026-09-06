@@ -60,7 +60,7 @@ export default function MapPointsUpdate(props: any) {
     return () => window.removeEventListener("keydown", handleKeyDown)
   }, [points])
 
-  return <MapContainer className="w-full h-full" center={position} zoom={zoom} scrollWheelZoom={false}>
+  return <MapContainer className="w-full h-full" center={position} zoom={zoom} scrollWheelZoom={true}>
     <TileLayer
       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

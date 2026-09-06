@@ -18,5 +18,5 @@ export const routeTable = mysqlTable('route_table', {
 export const adminTable = mysqlTable('admin_table', {
     id: int().primaryKey().autoincrement(),
     username: varchar({ length: 255 }).notNull().unique(),
-    password_hash: varchar({ length: 25}).notNull()
+    password_hash: varchar({ length: 255 }).notNull()
 })

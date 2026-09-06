@@ -1,10 +1,12 @@
 "use client"
 
-import MapPoints from "@/components/MapPoints"
 import { useEffect, useState } from "react"
 import { getRoutesList } from "./action"
 import Link from "next/link"
 import { deleteRoute } from "@/lib/db"
+import dynamic from "next/dynamic"
+
+const MapPoints = dynamic(() => import("@/components/MapPoints"))
 
 export default function Page() {
   const [routes, setRoutes] = useState<{id: number, points: string}[]>([])

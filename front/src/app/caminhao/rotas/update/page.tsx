@@ -1,10 +1,11 @@
 "use client"
 
-import MapPoints from "@/components/MapPoints"
 import { useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import { getRouteUpate } from "./action"
-import MapPointsUpdate from "@/components/MapPointsUpdate"
+import dynamic from "next/dynamic"
+const MapPointsUpdate = dynamic(() => import("@/components/MapPointsUpdate"))
+
 
 export default function Page() {
   const [route, setRoute] = useState<{id: number, points: string}[]>()

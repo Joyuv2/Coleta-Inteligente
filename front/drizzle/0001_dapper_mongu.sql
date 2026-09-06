@@ -1,0 +1,1 @@
+ALTER TABLE `admin_table` MODIFY COLUMN `password_hash` varchar(255) NOT NULL;

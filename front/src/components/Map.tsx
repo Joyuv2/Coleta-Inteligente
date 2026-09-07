@@ -144,17 +144,21 @@ const truck2 = {
   ]
 }
 export default function Map(props: any) {
-  const { position, zoom } = props
+  const { position, zoom, routes }: {position: LatLngExpression, zoom: number, routes: {id: number, points:string}[]} = props
+  
 
   return <MapContainer className="w-full h-full" center={position} zoom={zoom} scrollWheelZoom={true}>
     <TileLayer
       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
     />
-    <Marker position={[-6.439378, -37.084235]} icon={garbageIcon} />
+    {/* <Marker position={[-6.439378, -37.084235]} icon={garbageIcon} />
     <Marker position={[-6.453619, -37.094212]} icon={garbageIcon} />
     <Truck points={truck1.points} color={truck1.color} />
-    <Truck points={truck2.points} color={truck2.color} />
+    <Truck points={truck2.points} color={truck2.color} /> */}
+    {routes.map((el, ind) => (
+      <Polyline key={ind} positions={JSON.parse(el.points)} pathOptions={{color: "red"}}></Polyline>
+    ))}
     <LocationFinder />
   </MapContainer>
 }

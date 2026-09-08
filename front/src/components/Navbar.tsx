@@ -39,14 +39,14 @@ function DropDown({name, ways}: {name: string, ways: {name: string, href: string
 
 export default function Navbar({drops, links, location}: {drops?: {name: string, ways: {name: string, href: string}[]}[], links?: {name: string, href: string}[], location: string[]}) {
     return (
-    <div className="menu w-screen h-[4rem] p-4 mr-0 bg-background2 text-foreground flex flex-row justify-between gap-[1em] items-center">
+    <div className="menu w-screen h-[4rem] p-4 mr-0 bg-background2 text-foreground flex flex-row justify-between gap-[1em] items-center text-lg">
         { location.length === 1 &&
-            <div className={`${IPMono.className} text-2xl`}>
+            <div className={`${IPMono.className}`}>
                 {location[0]}
             </div>
         }
         { location.length > 1 &&
-            <div className={`${IPMono.className} text-2xl flex flex-row gap-[0.5rem]`}>
+            <div className={`${IPMono.className} flex flex-row gap-[0.5rem]`}>
                 {location.map((loc, ind) => {
                     if(ind === 0) {
                         return(<div key={loc}>{loc}</div>)

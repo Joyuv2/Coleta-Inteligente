@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
-import SideBar from "@/components/Sidebar"; 
-import Button from "@/components/Button";
-import Link from "next/link";
+import Navbar from "@/components/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,24 +24,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   
-  const buttons = [
-    {text: "Inicio", href: "/"},
-    {text: "Mapa", href: "/mapa"}
+  const links = [
+    {name: "Mapa", href: "/mapa"},
+    {name: "Inicio", href: "/"}
   ]
+
+  const drops = [
+    {name: "Caminhões", ways: [{name: "Lista", href: "/caminhao"}, {name: "Adicionar", href: "/caminhao/add"}, {name: "Rotas", href: "/caminhao/rotas"}]}
+  ]
+
   return (
-    <div className="h-screen w-screen flex flex-row items-center">
-      <SideBar>
-        {
-        buttons.map((el, ind) => (
-            <Link href={el.href} key={ind}>
-                <Button>
-                    {el.text}
-                </Button>
-            </Link>
-        ))
-        }
-      </SideBar>
-      <main className="min-h-full w-full">{children}</main>
+    <div className="h-screen w-screen flex flex-col items-center">
+      <Navbar drops={drops} links={links} location={["Início","Mapa"]} />
+      <main className="h-full w-full">{children}</main>
     </div>
   );
 }

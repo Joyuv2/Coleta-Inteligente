@@ -16,8 +16,8 @@
   --color-foreground: var(--foreground);
   --color-background2: var(--background2);
   --color-background3: var(--background3);
-  --color-foreground2: var(--background3);
-  --color-foreground3: var(--background3);
+  --color-foreground2: var(--foreground2);
+  --color-foreground3: var(--foreground3);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --color-botaoedit: var(--botaoedit);

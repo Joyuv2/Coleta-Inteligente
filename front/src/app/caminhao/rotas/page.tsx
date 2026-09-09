@@ -7,7 +7,7 @@ import { deleteRoute } from "@/lib/db"
 import dynamic from "next/dynamic"
 import Navbar from "@/components/Navbar"
 
-const MapPoints = dynamic(() => import("@/components/MapPoints"))
+const MapPoints = dynamic(() => import("@/components/MapPoints"), {ssr: false})
 
 export default function Page() {
   const [routes, setRoutes] = useState<{id: number, points: string}[]>([])

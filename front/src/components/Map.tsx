@@ -4,6 +4,11 @@ import "leaflet-defaulticon-compatibility"
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css"
 import { icon, LatLngExpression, divIcon } from "leaflet"
 import { useState } from "react"
+import { IBM_Plex_Mono } from "next/font/google"
+
+const IPMono = IBM_Plex_Mono({
+    weight: "400"
+})
 
 function LocationFinder() {
   const [position, setPosition] = useState<LatLngExpression>([0,0])
@@ -49,15 +54,27 @@ export default function Map(props: any) {
           const points = JSON.parse(el.points)
           return (
             <div id="sim" key={ind}>
-              <Polyline positions={JSON.parse(el.points)} pathOptions={{color: "#3b82f6"}}></Polyline>
+              <Polyline positions={JSON.parse(el.points)} pathOptions={{color: "#3b82f6", weight: 5, lineJoin: "bevel"}}></Polyline>
               <Marker position={points[0]} icon={squareIcon("#2f6fed")}/>
               <Marker position={points[points.length-1]} icon={squareIcon("#f5a623")}/>
             </div>
           )
         })}
-        <LocationFinder />
+        {/* <LocationFinder /> */}
       </MapContainer>
-      <div className="w-[12rem] h-[16rem] bg-background2 rounded-sm border-l-4 outline-2 outline-foreground2 border-blue-400 flex flex-col z-1000 absolute bottom-5 left-5">
+      <div className={`${IPMono.className} text-sm w-[12rem] h-[16rem] gap-5 bg-background2 rounded-sm border-l-4 outline-2 outline-foreground2 border-blue-400 flex flex-col z-1000 absolute bottom-5 left-5`}>
+        <div className="flex flex-row mt-6 ml-6 gap-2 items-center">
+          <div className="w-6 h-[2px] rounded bg-[#3b82f6]" />
+          <span>Rota</span>
+        </div>
+        <div className="flex flex-row ml-6 gap-2 items-center">
+          <div className="w-[16px] h-[16px] rounded bg-[#2f6fed]"/>
+          <span>Início da rota</span>
+        </div>
+        <div className="flex flex-row ml-6 gap-2 items-center">
+          <div className="w-[16px] h-[16px] rounded bg-[#f5a623]"/>
+          <span>Fim da rota</span>
+        </div>
       </div>
     </div>
   )

@@ -19,6 +19,7 @@ export default function Page() {
   async function handleDelete(e: React.MouseEvent<HTMLDivElement>) {
     e.preventDefault()
     await deleteRoute(parseInt(e.currentTarget.id))
+    window.location.reload()
   }
 
   const links = [

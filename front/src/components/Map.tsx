@@ -5,6 +5,8 @@ import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import { icon, LatLngExpression, divIcon } from "leaflet"
 import { useState } from "react"
 import { IBM_Plex_Mono } from "next/font/google"
+import styles from "@/components/line.module.css"
+import L from "leaflet"
 
 const IPMono = IBM_Plex_Mono({
     weight: "400"
@@ -54,7 +56,18 @@ export default function Map(props: any) {
           const points = JSON.parse(el.points)
           return (
             <div id="sim" key={ind}>
-              <Polyline positions={JSON.parse(el.points)} pathOptions={{color: "#3b82f6", weight: 5, lineJoin: "bevel"}}></Polyline>
+              <Polyline 
+                positions={JSON.parse(el.points)}
+                pathOptions={{color: "#3b82f6", weight: 5, lineJoin: "bevel", dashArray:"6 10",  className:`${styles.animated_line}`}} 
+                eventHandlers={{
+                  mouseover: (e) => {
+                    e.target.setStyle({ weight: 8, dashArray: "10 10"})
+                  },
+                  mouseout: (e) => {
+                    e.target.setStyle({ weight: 5, dashArray: "6 10"})
+                  }
+                }}
+              />
               <Marker position={points[0]} icon={squareIcon("#2f6fed")}/>
               <Marker position={points[points.length-1]} icon={squareIcon("#f5a623")}/>
             </div>

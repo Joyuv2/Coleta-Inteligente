@@ -2,10 +2,14 @@
 
 import Navbar from "@/components/Navbar"
 import { addTruck } from "@/lib/db"
+import { useRouter } from "next/navigation"
 
 export default function Page() {
+    const router = useRouter()
+
     async function handleSubmit(formData: FormData) {
         const res = await addTruck(formData.get('plate')!)
+
     }
 
     const links = [

@@ -1,27 +1,28 @@
-import Image from "next/image";
-import SideBar from "@/components/Sidebar";
-import Link from "next/link";
-import Button from "@/components/Button";
+import Navbar from "@/components/Navbar";
+import styles from "@/app/index.module.css"
+import { JetBrains_Mono } from "next/font/google";
+
+const JBM = JetBrains_Mono({
+  weight: "400"
+})
 
 export default function Home() {
-  const buttons = [
-    {text: "Mapa", href: "/mapa"},
-    {text: "Caminhões", href: "/caminhao"}
+  const links = [
+    {name: "Mapa", href: "/mapa"},
+    {name: "Login", href: "/login"}
+    // {name: "Caminhões", href: "/caminhao"}
   ]
+  const drops = [
+    {name: "Caminhões", ways: [{name: "Lista", href: "/caminhao"}, {name: "Adicionar", href: "/caminhao/add"}, {name: "Rotas", href: "/caminhao/rotas"}]}
+  ]
+
   return (
-    <div className="h-screen w-screen flex flex-row items-center">
-    <SideBar>
-        {
-        buttons.map((el, ind) => (
-            <Link href={el.href} key={ind}>
-                <Button>
-                    {el.text}
-                </Button>
-            </Link>
-        ))
-        }
-      </SideBar>
-      <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
+    <div className="h-screen w-screen flex flex-col items-center">
+      <Navbar links={links} drops={drops} location={["Início"]} />
+      <div className={`relative flex flex-col items-center h-full w-full bg-zinc-50 font-sans dark:bg-black`}>
+        <div className={`${styles.backgroundimg} absolute h-full overflow-hidden w-full`}/>
+        <h1 className={`${JBM.className} text-[8rem]`}>Colint</h1>
+        <h2 className={`${JBM.className} text-[2rem]`}>Coleta Inteligente</h2>
       </div>
     </div>
   );

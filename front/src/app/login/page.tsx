@@ -3,25 +3,22 @@
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation"
-import SideBar from "@/components/Sidebar";
-import Link from "next/link";
-import Button from "@/components/Button";
+import Navbar from "@/components/Navbar";
+import { IBM_Plex_Mono } from "next/font/google";
+
+const IPMono = IBM_Plex_Mono({
+    weight: "400"
+})
 
 function Input({name, placeholder, type}: {name:string, placeholder:string, type:string}) {
     return (
-        <input className="p-3 bg-gray-900 rounded-2xl border-2 w-full focus:outline-0 border-foreground-3 text-xl" name={name} type={type} placeholder={placeholder} required></input>
+        <input className="p-3 bg-background rounded border-2 w-full focus:outline-0 border-foreground3 text-xl" name={name} type={type} placeholder={placeholder} required></input>
     )
 }
 
 export default function LoginPage() {
     const [error, setError] = useState("")
     const router = useRouter()
-
-    const buttons = [
-    {text: "Início", href: "/"},
-    {text: "Mapa", href: "/mapa"},
-    {text: "Caminhões", href: "/caminhao"}
-  ]
 
     async function handleSubmit(formData: FormData) {
         const res = await signIn("credentials", {
@@ -36,25 +33,33 @@ export default function LoginPage() {
             router.push("/caminhao")
         }
     }
+
+    const links = [
+        {name: "Mapa", href: "/mapa"},
+        {name: "Início", href: "/"}
+    ]
     return (
-        <div className={`flex h-screen items-center gap-[40rem]`}>
-            <SideBar>
-                {
-                    buttons.map((el, ind) => (
-                        <Link href={el.href} key={ind}>
-                            <Button>
-                                {el.text}
-                            </Button>
-                        </Link>
-                    ))
-                }
-            </SideBar>
-            <form action={handleSubmit} className="flex flex-col m-10 gap-4 p-4 bg-background3 rounded-xl justify-center items-center w-[40em]">
-                <Input name="name" type="text" placeholder="Nome..."/>
-                <Input name="password" type="password" placeholder="Senha..."/>
-                <button type="submit" className="hover:cursor-pointer border-black border-b-2 border-r-2 rounded-2xl text-2xl bg-background2 hover:border-0 min-w-[10em] hover:mb-[2px] hover:mr-[2px]">Entrar</button>
-                {error && <p>{error}</p>}
-            </form>
+        <div className={`flex flex-col h-screen items-center`}>
+            <Navbar links={links} location={["Início","Login"]}/>
+            <div className={`flex flex-col text-xl justify-center h-full ${IPMono.className}`}>
+                <form action={handleSubmit} className="flex flex-col m-10 gap-2 p-4 bg-background2 rounded border-3 border-background3 justify-center items-center w-[40em]">
+                    <div className="pb-2 border-b-2 border-foreground2 px-30 text-2xl">
+                        <h1>Login</h1>
+                    </div>
+                    <div className="flex flex-col gap-4 w-full items-center">
+                        <div className="w-9/10">
+                            <label htmlFor="name">Nome</label>
+                            <Input name="name" type="text" placeholder="Nome..."/>
+                        </div>
+                        <div className="w-9/10">
+                            <label htmlFor="password">Senha</label>
+                            <Input name="password" type="password" placeholder="Senha..."/>
+                        </div>
+                        <button type="submit" className="w-1/2 hover:cursor-pointer border-black shadow-lg hover:shadow-none duration-200 shadow-background text-2xl bg-background2 hover:border-0 py-2 min-w-[8em] my-5">Entrar</button>
+                        {error && <p>{error}</p>}
+                    </div>
+                </form>
+            </div>
         </div>
     )
 }

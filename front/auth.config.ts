@@ -9,6 +9,19 @@ export const authConfig = {
       if (isOnDashboard) return isLoggedIn
       return true
     },
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id
+        token.flags = user.flags
+      }
+      return token
+    },
+
+    async session({ session, token }) {
+      session.user.id = token.id as string
+      session.user.flags = token.flags as string[]
+      return session
+    },
   },
   providers: [],
 } satisfies NextAuthConfig

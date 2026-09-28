@@ -9,11 +9,12 @@ export default function Page() {
 
     async function handleSubmit(formData: FormData) {
         const res = await addTruck(formData.get('plate')!)
-
+        router.push("/caminhao")
     }
 
     const links = [
         {name: "Mapa", href: "/mapa"},
+        {name: "Cadastrar", href: "/cadastro"},
         {name: "Início", href: "/"}
     ]
 

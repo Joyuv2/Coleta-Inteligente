@@ -26,6 +26,7 @@ export default function RootLayout({
   
   const links = [
     {name: "Mapa", href: "/mapa"},
+    {name: "Cadastrar", href: "/cadastro"},
     {name: "Inicio", href: "/"}
   ]
 

@@ -26,6 +26,7 @@ export default function Page() {
 
     const links = [
         {name: "Mapa", href: "/mapa"},
+        {name: "Cadastrar", href: "cadastro"},
         {name: "Início", href: "/"}
     ]
 

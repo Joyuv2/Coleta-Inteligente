@@ -15,6 +15,13 @@
       "when": 1788713507904,
       "tag": "0001_dapper_mongu",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1789320455965,
+      "tag": "0002_faulty_shaman",
+      "breakpoints": true
     }
   ]
 }

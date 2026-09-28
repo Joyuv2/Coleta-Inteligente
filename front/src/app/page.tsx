@@ -9,6 +9,7 @@ const JBM = JetBrains_Mono({
 export default function Home() {
   const links = [
     {name: "Mapa", href: "/mapa"},
+    {name: "Cadastrar", href: "/cadastro"},
     {name: "Login", href: "/login"}
     // {name: "Caminhões", href: "/caminhao"}
   ]

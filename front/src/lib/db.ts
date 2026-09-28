@@ -1,6 +1,6 @@
 "use server"
 
-import { adminTable, routeTable, truckTable } from '@/db/schema';
+import { routeTable, truckTable, userTable } from '@/db/schema';
 import 'dotenv/config';
 import { eq } from 'drizzle-orm';
 import { drizzle } from "drizzle-orm/mysql2";
@@ -84,6 +84,10 @@ export async function getRoute(id: number) {
     return await db.select().from(routeTable).where(eq(routeTable.id, id))
 }
 
-export async function checkAdmin(username: string) {
-    return await db.select().from(adminTable).where(eq(adminTable.username, username))
+export async function checkUser(username: string) {
+    return await db.select().from(userTable).where(eq(userTable.username, username))
+}
+
+export async function registerUser(username: string, passwordHash: string) {
+    return await db.insert(userTable).values({username: username, password_hash: passwordHash, flags: "[]"})
 }

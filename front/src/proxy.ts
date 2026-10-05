@@ -1,8 +1,5 @@
-import NextAuth from "next-auth";
-import { authConfig } from "@/../auth.config"
+import { auth } from "@/../auth";
 import { NextResponse } from "next/server";
-
-const { auth } = NextAuth(authConfig)
 
 const ROUTE_FLAGS: Record<string, string> = {
   "/caminhao": "admin_access",
@@ -16,7 +13,7 @@ function getRequiredFlag(pathname: string): string | undefined {
   return match ? ROUTE_FLAGS[match] : undefined;
 }
 
-export default auth(function proxy(req) {
+export default auth((req) => {
   const { pathname } = req.nextUrl;
   const requiredFlag = getRequiredFlag(pathname);
 
@@ -24,16 +21,16 @@ export default auth(function proxy(req) {
     return NextResponse.next();
   }
 
-  const userFlags: string[] = req.auth?.user?.flags! ?? [];
+  const userFlags: string[] = req.auth?.user?.flags ?? [];
 
   if (!userFlags.includes(requiredFlag)) {
     const url = req.nextUrl.clone();
     url.pathname = "/login";
-    console.log("[proxy]","\x1b[31m[err]\x1b[0m", req.url, "Acesso não autorizado", userFlags)
+    console.log("[proxy]", "\x1b[31m[err]\x1b[0m", req.url, "Acesso não autorizado", userFlags);
     return NextResponse.redirect(url);
   }
 
-  console.log("[proxy]", "\x1b[32m[suc]\x1b[0m" , req.url)
+  console.log("[proxy]", "\x1b[32m[suc]\x1b[0m", req.url);
 
   return NextResponse.next();
 });

@@ -91,3 +91,33 @@ export async function checkUser(username: string) {
 export async function registerUser(username: string, passwordHash: string) {
     return await db.insert(userTable).values({username: username, password_hash: passwordHash, flags: "[]"})
 }
+
+export async function getUsers() {
+    return await db.select().from(userTable)
+}
+
+export async function giveUserFlag(username: string, flag: string) {
+    const user = await db.select().from(userTable).where(eq(userTable.username, username))
+    if (user.length === 0) {
+        return {message: "User not found"}
+    }
+    const userFlags = JSON.parse(user[0].flags!) as string[]
+    if (!userFlags.includes(flag)) {
+        userFlags.push(flag)
+        await db.update(userTable).set({flags: JSON.stringify(userFlags)}).where(eq(userTable.username, username))
+    }
+    return {message: "success"}
+}
+
+export async function removeUserFlag(username: string, flag: string) {
+    const user = await db.select().from(userTable).where(eq(userTable.username, username))
+    if (user.length === 0) {
+        return {message: "User not found"}
+    }
+    const userFlags = JSON.parse(user[0].flags!) as string[]
+    if (userFlags.includes(flag)) {
+        const updatedFlags = userFlags.filter(f => f !== flag)
+        await db.update(userTable).set({flags: JSON.stringify(updatedFlags)}).where(eq(userTable.username, username))
+    }
+    return {message: "success"}
+}

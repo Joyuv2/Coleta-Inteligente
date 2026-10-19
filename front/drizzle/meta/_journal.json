@@ -22,6 +22,20 @@
       "when": 1789320455965,
       "tag": "0002_faulty_shaman",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1792405659290,
+      "tag": "0003_wandering_blackheart",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1792407586693,
+      "tag": "0004_nifty_betty_brant",
+      "breakpoints": true
     }
   ]
 }

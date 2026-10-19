@@ -21,3 +21,11 @@ export const userTable = mysqlTable('user_table', {
     password_hash: varchar({ length: 255 }).notNull(),
     flags: text()
 })
+
+export const routeTruckTable = mysqlTable('route_truck_table', {
+    id: int().primaryKey().autoincrement(),
+    previous_points: text(),
+    point: text().notNull(),
+    route_id: int().notNull().references(() => routeTable.id),
+    truck_id: int().notNull().references(() => truckTable.id),
+})

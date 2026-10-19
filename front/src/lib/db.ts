@@ -1,6 +1,6 @@
 "use server"
 
-import { routeTable, truckTable, userTable } from '@/db/schema';
+import { routeTable, routeTruckTable, truckTable, userTable } from '@/db/schema';
 import 'dotenv/config';
 import { eq } from 'drizzle-orm';
 import { drizzle } from "drizzle-orm/mysql2";
@@ -120,4 +120,52 @@ export async function removeUserFlag(username: string, flag: string) {
         await db.update(userTable).set({flags: JSON.stringify(updatedFlags)}).where(eq(userTable.username, username))
     }
     return {message: "success"}
+}
+
+export async function addRouteTruck(routeId: number, truckId: number) {
+    try {
+        const pointStr = await getRoute(routeId).then(route => {
+            if (route.length === 0) {
+                throw new Error("Route not found")
+            } else {
+                const points = JSON.parse(route[0].points!) as [number, number][]
+                return JSON.stringify(points[0])
+            }
+        })
+        await db.insert(routeTruckTable).values({route_id: routeId, truck_id: truckId, point: pointStr, previous_points: pointStr})
+    } catch (error) {
+        return {message: "error while trying to insert item"}
+    }
+}
+
+export async function updateRouteTruck(routeTruckId: number, point: [number, number]) {
+    try {
+        const routeTruck = await db.select().from(routeTruckTable).where(eq(routeTruckTable.id, routeTruckId))
+        if (routeTruck.length === 0) {
+            return {message: "RouteTruck not found"}
+        }
+        const previous_points = JSON.parse(routeTruck[0].previous_points ?? "[]") as [number, number][]
+        const points = [...previous_points, point]
+        await db.update(routeTruckTable)
+        .set({point: JSON.stringify(point), previous_points: JSON.stringify(points)})
+        .where(eq(routeTruckTable.id, routeTruckId))
+    } catch (error) {
+        return {message: "error while trying to update item"}
+    }
+}
+
+export async function deleteRouteTruck(routeTruckId: number) {
+    try {
+        await db.delete(routeTruckTable).where(eq(routeTruckTable.id, routeTruckId))
+    } catch (error) {
+        return {message: "error while trying to delete item"}
+    }
+}
+
+export async function getRouteTruckById(routeTruckId: number) {
+    return await db.select().from(routeTruckTable).where(eq(routeTruckTable.id, routeTruckId))
+}
+
+export async function getRouteTrucks(){
+    return await db.select().from(routeTruckTable)
 }

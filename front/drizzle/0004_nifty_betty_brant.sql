@@ -1,0 +1,1 @@
+ALTER TABLE `route_truck_table` ADD `previous_points` text;

@@ -20,8 +20,8 @@ export default function Page(){
     }, [])
 
     return(
-        <div className="p-12 w-full h-screen">
-            <div className="w-full h-full flex flex-row flex-wrap bg-background2 p-4 rounded-xl gap-5 ">
+        <div className="p-6 w-full h-full">
+            <div className="w-full h-full flex flex-row flex-wrap bg-background2 p-3 gap-5 ">
                 <Map position={[-6.455410, -37.094683]} routes={routes} zoom={15}/>
             </div>
         </div>

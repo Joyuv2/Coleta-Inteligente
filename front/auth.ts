@@ -1,7 +1,7 @@
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { z } from "zod"
-import { checkAdmin } from "@/lib/db"
+import { checkUser } from "@/lib/db"
 import { verifyPassword } from "@/lib/encrypt"
 import { authConfig } from "./auth.config"
 
@@ -24,26 +24,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 if (!parsed.success) return null
 
                 const { name, password } = parsed.data
-                const [user] = await checkAdmin(name)
+                const [user] = await checkUser(name)
 
                 if(!user || !user.password_hash) return null
 
                 const passwordsMatch = await verifyPassword(password, user.password_hash)
                 if (!passwordsMatch) return null
 
-                return { id: String(user.id), name: user.username }
+                return { id: String(user.id), name: user.username, flags: JSON.parse(user.flags!) }
             },
         }),
     ],
-    callbacks: {
-        async jwt({ token, user }) {
-            if (user) {
-                token.id = user.id
-            }
-            return token
-        },
-
-    },
     pages: {
         signIn: "/login"
     }

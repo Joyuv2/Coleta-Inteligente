@@ -3,5 +3,6 @@
 import { getRoutes } from "@/lib/db"
 
 export default async function getRoutesList() {
-    return await getRoutes()
+    const routes = await getRoutes() 
+    return routes
 }

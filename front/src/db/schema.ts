@@ -15,8 +15,9 @@ export const routeTable = mysqlTable('route_table', {
     points: text().notNull(),
 })
 
-export const adminTable = mysqlTable('admin_table', {
+export const userTable = mysqlTable('user_table', {
     id: int().primaryKey().autoincrement(),
     username: varchar({ length: 255 }).notNull().unique(),
-    password_hash: varchar({ length: 255 }).notNull()
+    password_hash: varchar({ length: 255 }).notNull(),
+    flags: text()
 })

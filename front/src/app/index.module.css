@@ -1,0 +1,19 @@
+
+.backgroundimg {
+    background-image: url(/2.svg);
+    transition: 0.2s;
+    opacity: 0.25;
+    animation: move 10s linear infinite;
+}
+
+@media(prefers-color-scheme: dark) {
+    .backgroundimg {
+        background-image: url(/1.svg); 
+    }
+}
+
+@keyframes move {
+    to {
+        background-position: -1920px -1080px;
+    }
+}

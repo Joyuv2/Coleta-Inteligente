@@ -49,10 +49,10 @@ export default function MapPointsUpdate(props: any) {
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
-      if((e.ctrlKey || e.metaKey) && e.key == 'Enter') {
+      if(e.key == 'Enter') {
         e.preventDefault()
         updateRoute(id, points)
-        console.log(id)
+        window.location.reload()
       }
     }
     

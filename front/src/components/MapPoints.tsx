@@ -6,6 +6,7 @@ import "leaflet-defaulticon-compatibility"
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css"
 import { useEffect, useState } from "react"
 import { addRoute } from "@/lib/db"
+import { useRouter } from "next/navigation"
 
 function HandleClick({onMapClick}: { onMapClick: (lat: number, lng: number) => void}) {
       useMapEvents({
@@ -19,6 +20,7 @@ function HandleClick({onMapClick}: { onMapClick: (lat: number, lng: number) => v
 export default function MapPoints(props: any) {
   const [points, setPoints] = useState<[number, number][]>([])
   const { position, zoom } = props
+  const router = useRouter()
 
   function handleMapClick(lat: number, lng: number) {
     setPoints((prev) => [...prev, [lat, lng]])
@@ -43,9 +45,10 @@ export default function MapPoints(props: any) {
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
-      if((e.ctrlKey || e.metaKey) && e.key == 'Enter') {
+      if(e.key == 'Enter') {
         e.preventDefault()
         addRoute(points)
+        window.location.reload()
       }
     }
     

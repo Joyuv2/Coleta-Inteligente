@@ -6,6 +6,6 @@ export default defineConfig({
   schema: './src/db/schema.ts',
   dialect: 'mysql',
   dbCredentials: {
-    url: "mysql://root:admin@localhost:3306/banco",
+    url: process.env.DATABASE_URL!,
   },
 });

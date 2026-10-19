@@ -47,8 +47,9 @@ export default function MapPoints(props: any) {
     function handleKeyDown(e: KeyboardEvent) {
       if(e.key == 'Enter') {
         e.preventDefault()
-        addRoute(points)
-        window.location.reload()
+        addRoute(points).then(() => {
+          window.location.reload()
+        })
       }
     }
     

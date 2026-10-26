@@ -169,3 +169,22 @@ export async function getRouteTruckById(routeTruckId: number) {
 export async function getRouteTrucks(){
     return await db.select().from(routeTruckTable)
 }
+
+export async function undoLastPointRouteTruck(routeTruckId: number) {
+    try {
+        const routeTruck = await db.select().from(routeTruckTable).where(eq(routeTruckTable.id, routeTruckId))
+        if (routeTruck.length === 0) {
+            return {message: "RouteTruck not found"}
+        }
+        const previous_points = JSON.parse(routeTruck[0].previous_points ?? "[]") as [number, number][]
+        if (previous_points.length === 0) {
+            return {message: "No points to undo"}
+        }
+        previous_points.pop()
+        await db.update(routeTruckTable)
+            .set({previous_points: JSON.stringify(previous_points)})
+            .where(eq(routeTruckTable.id, routeTruckId))
+    } catch (error) {
+        return {message: "error while trying to undo last point"}
+    }
+}

@@ -61,7 +61,7 @@ export default function Navbar({drops, links, location}: {drops?: {name: string,
                     } else if(ind < (location.length - 1)) {
                         return (<div key={loc}>/ {loc}</div>)
                     } else {
-                        return (<div key={loc}><span>/ </span><div className="font-bold border-b-2 border-foreground3 text-xl">{loc}</div></div>)
+                        return (<div key={loc}><span>/ </span><span className="font-bold border-b-2 border-foreground3 text-xl">{loc}</span></div>)
                     }
                 })}    
             </div>

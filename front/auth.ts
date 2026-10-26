@@ -7,7 +7,7 @@ import { authConfig } from "./auth.config"
 
 const credentialsSchema = z.object({
     name: z.string().min(3).max(32),
-    password: z.string().min(8)
+    password: z.string().min(1)
 })
 
 export const { handlers, signIn, signOut, auth } = NextAuth({

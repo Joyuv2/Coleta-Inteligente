@@ -27,7 +27,7 @@ export default function Page() {
     ]
 
     function handleAddFlag(e: React.MouseEvent<HTMLButtonElement>) {
-        const flagValue = e.currentTarget.parentElement?.querySelector("input")?.value!
+        const flagValue = e.currentTarget.parentElement?.querySelector("select")?.value ?? ""
         const username = e.currentTarget.id
         addFlag(username, flagValue).then(() => {
             window.location.reload()
@@ -53,11 +53,15 @@ export default function Page() {
                             <div className="flex flex-row justify-between w-full">
                                 <ul>
                                     {JSON.parse(user.flags).map((flag: string, index: number) => (
-                                        <li onClick={handleRemoveFlag} id={user.username} key={index}>{flag}</li>
+                                        <li className="cursor-pointer hover:bg-red-500" onClick={handleRemoveFlag} id={user.username} key={index}>{flag}</li>
                                     ))}
                                 </ul>
                                 <div className="flex flex-row gap-2">
-                                    <input type="text" placeholder="Flag..." className="p-2 bg-background rounded border-2 w-full focus:outline-0 border-foreground3 text-xl required"/>
+                                    <select defaultValue="" className="p-2 bg-background rounded border-2 w-full focus:outline-0 border-foreground3 text-xl required">
+                                        <option value="" disabled>Selecione a flag</option>
+                                        <option value="admin_access">admin_access</option>
+                                        <option value="driver_access">driver_access</option>
+                                    </select>
                                     <button onClick={handleAddFlag} id={user.username} className="w-1/4 hover:cursor-pointer border-black shadow-lg hover:shadow-none duration-200 shadow-background text-2xl bg-background2 hover:border-0 py-2 min-w-[8em] my-5">Adicionar</button>
                                 </div>
                             </div>

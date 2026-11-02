@@ -130,11 +130,9 @@ export default function MapPoints(props: any) {
         <Polyline
           positions={points}
           pathOptions={{
-            color: "orange",
+            color: "#FB8500",
             weight: 5,
-            lineJoin: "bevel",
-            dashArray: "6 10",
-            className: `${styles.animated_line} z-10`
+            lineJoin: "bevel"
           }}
         />
       )}
